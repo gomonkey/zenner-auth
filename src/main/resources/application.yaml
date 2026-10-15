@@ -1,0 +1,37 @@
+spring:
+
+  application:
+    name: zenner-auth
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+
+  datasource:
+    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+
+  flyway:
+    enabled: true
+    default-schema: ${DATABASE_SCHEMA}
+    schemas:
+      - ${DATABASE_SCHEMA}
+    locations:
+      - classpath:db/migration
+
+server:
+  port: ${SERVER_PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: when-authorized
+  health:
+    redis:
+      enabled: false
